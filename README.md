@@ -6,7 +6,7 @@ The following provides MCML affliates with a documentation about how to use the 
 (1) Get in contact with one of the master users (Stefan Fischer, Johannes Kiechle) \
 (2) Ask them to create a personal LRZ ID, which will be the login ID for the MCML AI cluster (similar to TUM ID, usually with a number as extension: ge37bud --> ge37bud2) \
 (3) Once you know your **personal LRZ ID** and the **email address** which is linked to the LRZ ID, please reset your passwort and create a personal one [here](https://idmportal.lrz.de/pwreset). Select: **I know an e-mail address associated with my LRZ account** and follow the instructions. \
-(4) After setting your personal passwort please login into the [LRZ IDM Portal](https://idmportal.lrz.de/r/entry.pl) and accept the export control statement (otherwise you'll be not able to login into the LRZ AI Login Node from where you can start allocating GPU ressources). \
+(4) After setting your personal passwort please login into the [LRZ IDM Portal](https://idmportal2.lrz.de/jidmp/) and accept the export control statement (otherwise you'll be not able to login into the LRZ AI Login Node from where you can start allocating GPU ressources). \
 (5) Try to login into the LRZ AI Login Node using the command below.
 
 
