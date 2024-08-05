@@ -87,3 +87,56 @@ $ sbatch
 Example:
 $ sbatch script.sbatch
 ```
+--- 
+
+# (4) Nvidia Container Repository
+
+If you want to use enroot containers from the [nvidia container repository](https://catalog.ngc.nvidia.com/containers?filters=platform%7CPyTorch%7Cpltfm_pytorch&orderBy=weightPopularDESC&query=&page=&pageSize=), which is recommended, you first have to create an user account [here](https://ngc.nvidia.com/signin). Once you've done that, please create your personal API Key [here](https://ngc.nvidia.com/setup/api-key) **and do not forget to save it somewhere you'll find the key again**. Now follow the steps below:
+
+```console
+Login into LRZ AI Login Node
+$ ssh login.ai.lrz.de -l your_user_ID
+
+Create a folder called 'enroot' in your home directory (if it does not exist already)
+$ mkdir enroot
+$ cd enroot
+
+Create a file called '.credentials' within the enroot directory
+$ touch .credentials
+
+Open the '.credentials' file with an editor
+$ nano .credentials
+
+Append the following line to the '.credentials' file and replace <API_KEY> with your personal API Key you created in the step expalined above: 
+
+machine nvcr.io login $oauthtoken password <API_KEY>
+```
+
+# (5) Demo Application
+
+```console
+Login into LRZ AI Login Node
+$ ssh login.ai.lrz.de -l your_user_ID
+
+Allocate GPU
+$ salloc --partition=mcml-dgx-a100-40x8 --qos=mcml --ntasks=4 --gres=gpu:1
+
+Run interactive session within allocated ressource
+$ srun --pty bash
+
+Get CUDA+PyTorch container from nvidia container repository (only once!)
+$ enroot import docker://nvcr.io/nvidia/pytorch:24.07-py3
+
+Create container image from container file (every time you allocate a GPU!)
+$ enroot create nvidia+pytorch+24.07-py3.sqsh
+
+Run container as root
+$ enroot start --root nvidia+pytorch+24.07-py3
+
+How to reuse a container?
+- Start container
+- Install all necessary libraries using pip/conda
+- Exit container
+
+$ enroot export --output my_container.sqsh my_container
+```
