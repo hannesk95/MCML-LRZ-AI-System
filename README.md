@@ -59,6 +59,17 @@ $ salloc --partition=lrz-dgx-a100-80x8 --ntasks=8 --gres=gpu:8 --time=3-00:00:00
 
 # (2) Data Storage
 
+Please use the following command to get an overview of all our accessible Data Storages
+
+```console
+$ dssusrinfo all
+```
+
+How to transfer data to the data science storage (DSS):
+
+(1) Install [Globus Personal Connect](https://www.globus.org/globus-connect-personal) for your respective OS \
+(2) Open Globus Personal Connect and login
+
 # (3) Submitting a Job
 
 Some useful slurm commands: 
@@ -119,7 +130,7 @@ Login into LRZ AI Login Node
 $ ssh login.ai.lrz.de -l your_user_ID
 
 Allocate GPU
-$ salloc --partition=mcml-dgx-a100-40x8 --qos=mcml --ntasks=4 --gres=gpu:1
+$ salloc --partition=mcml-dgx-a100-40x8 --qos=mcml --ntasks=1 --gres=gpu:1
 
 Run interactive session within allocated ressource
 $ srun --pty bash
@@ -138,5 +149,26 @@ How to reuse a container?
 - Install all necessary libraries using pip/conda
 - Exit container
 
-$ enroot export --output my_container.sqsh my_container
+$ enroot export --output <new_container_name.sqsh> <current_container_name>
+```
+
+# (6) Interactive vs. Batch Jobs
+
+![image info](./assets/summary.png)
+
+# (7) Distributed Trainining - Multi-GPU
+
+In order to use distributed training across several GPUs make sure you've installed **Horovod** in your enroot container. This can be done by invoking the following command:
+
+```console
+$ HOROVOD_GPU_OPERATIONS=NCCL pip install --nocache-dir horovod
+```
+
+![image info](./assets/horovod.png)
+
+Please refer to the example [horovod script](./pytorch_imagenet_resnet50.py) to see the changes you have to apply in order to enable your training script for multi-GPU training.
+
+```console
+# Run training with 2 GPUs on a single machine
+$ horovodrun -np 2 python pytorch_imagenet_resnet50.py
 ```
