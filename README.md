@@ -151,17 +151,19 @@ How to reuse a container?
 
 $ enroot export --output <new_container_name.sqsh> <current_container_name>
 ```
+---
 
 # (6) Interactive vs. Batch Jobs
 
 ![image info](./assets/summary.png)
 
+---
 # (7) Distributed Trainining - Multi-GPU
 
 In order to use distributed training across several GPUs make sure you've installed **Horovod** in your enroot container. This can be done by invoking the following command:
 
 ```console
-$ HOROVOD_GPU_OPERATIONS=NCCL pip install --nocache-dir horovod
+$ HOROVOD_GPU_OPERATIONS=NCCL HOROVOD_WITH_PYTORCH=1 pip install horovod[pytorch]
 ```
 
 ![image info](./assets/horovod.png)
@@ -172,3 +174,16 @@ Please refer to the example [horovod script](./pytorch_imagenet_resnet50.py) to 
 # Run training with 2 GPUs on a single machine
 $ horovodrun -np 2 python pytorch_imagenet_resnet50.py
 ```
+
+---
+# (8) Tmux Basis
+
+Here is a list of a few basic tmux commands:
+
+- Ctrl+b " — split pane horizontally.
+- Ctrl+b % — split pane vertically.
+- Ctrl+b arrow key — switch pane.
+- Hold Ctrl+b, don’t release it and hold one of the arrow keys — resize pane.
+- Ctrl+b c — (c)reate a new window.
+- Ctrl+b n — move to the (n)ext window.
+- Ctrl+b p — move to the (p)revious window.
